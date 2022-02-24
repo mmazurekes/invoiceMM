@@ -4,17 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"!-->
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
 
     <title>Faktury</title>
 </head>
 <body>
 <main>
+    
     <!--/*@thymesVar id="invoices" type="java.utils.List<mazurek.run.model.InvoiceReadModel>"*/-->
     <ul class="collection" th:each="invoice : ${invoices}">
         <li class="collection-item row" th:text="${invoice.description}">...<li>
     </ul>
-
+    <div id="window_overlay"></div>
+    <div id="window_entrance" class="window_content">
+    <a href="#" class="window_close">&times;</a>
+    <h2>PROMOCJA</h2><br>
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+    </div>
 </main>
+
+<script>
+	$(function() {
+    $('.window_content a.window_close').on('click', function(e) {
+        e.preventDefault();
+ 
+        $(this).parent().removeClass('opened');
+        $('#window_overlay').removeClass('opened');
+    });
+
+    $('.window_content').addClass('opened');
+    $('#window_overlay').addClass('opened');
+});
+</script>
 </body>
 </html>
