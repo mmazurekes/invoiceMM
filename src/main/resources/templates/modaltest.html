@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(20,0,0,0.4); /* Black w/ opacity */
+
+}
+
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/*The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+#customers tr:hover {background-color: #ddd;}
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+
+
+
+input[type=text], input[type=datetime-local] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+
+</style>
+</head>
+<body>
+<main>
+  <!--/*@thymesVar id="invoices" type="java.utils.List<mazurek.run.model.InvoiceReadModel>"*/-->
+<table id="customers" >
+  <!--
+  this.invoiceNumber = invoice.getInvoiceNumber();
+  this.purchaseDate = invoice.getPurchaseDate();
+  this.createDate = invoice.getCreateDate();
+  this.description = invoice.getDescription();
+  !-->
+  <tr>
+    <th>invoiceNumber</th>
+    <th>purchaseDate</th>
+    <th>createDate</th>
+    <th>description</th>
+  </tr>
+
+  <tr th:each="invoice : ${invoices}">
+    <td th:text="${invoice.invoiceNumber}">...</td>
+    <td th:text="${invoice.purchaseDate}">...</td>
+    <td th:text="${invoice.createDate}">...</td>
+    <td th:text="${invoice.description}">...</td>
+  </tr>
+
+</table>
+
+
+
+
+
+<!-- Trigger/Open The Modal -->
+<button id="myBtn">Open Modal</button>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Some text in the Modalaaa..</p>
+
+    <!--/*@thymesVar id="invoices" type="mazurek.run.model.InvoiceWriteModel"*/-->
+    <form action="#" method="post" th:action="@{/my}" >
+      <label for="fname">Invoice Number</label>
+      <input type="text" id="fname" name="invoiceNumber" placeholder="Invoice number">
+      <label for="lname">Data faktury</label>
+      <input type="datetime-local" id="lname" name="purchaseDate" placeholder="Data wystawienia">
+      <label for="lname">Description</label>
+      <input type="text" id="pdate" name="description" placeholder="Opis" >
+      <input type="submit" value="Submit">
+    </form>
+
+
+  </div>
+
+</div>
+
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+</main>
+</body>
+</html>

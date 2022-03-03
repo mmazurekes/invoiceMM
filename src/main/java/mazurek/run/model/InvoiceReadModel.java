@@ -1,8 +1,5 @@
 package mazurek.run.model;
 
-import org.springframework.boot.SpringApplication;
-
-import javax.swing.*;
 import java.time.LocalDateTime;
 
 public class InvoiceReadModel {
