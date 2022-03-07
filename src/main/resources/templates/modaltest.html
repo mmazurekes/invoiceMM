@@ -141,6 +141,9 @@ input[type=submit]:hover {
 
     <!--/*@thymesVar id="invoices" type="mazurek.run.model.InvoiceWriteModel"*/-->
     <form action="#" method="post" th:action="@{/my}" >
+      <label>Id</label>
+      <input type="text" id="id" name="id" readonly>
+
       <label>Invoice Number</label>
       <input type="text" id="invoiceNumberId" name="invoiceNumber" placeholder="Invoice number">
       <label>Data faktury</label>
@@ -178,12 +181,16 @@ window.onclick = function(event) {
 
 var tableRows = document.getElementsByClassName("tableRow");
   for( var i=0; i < tableRows.length; i ++ ){
-      tableRows[i].onclick = function() {
+      tableRows[i].onclick = function(event) {
         modal.style.display = "block";
-        var tabr = tableRows[3];
-        var tds = tableRows[3].getElementsByTagName("td");
-        var tdit = tableRows[3].getElementsByTagName("td").item(0);
-        var id = tableRows[3].getElementsByTagName("td").item(0).innerHTML;
+
+
+        var id = event.currentTarget.cells[0].innerText;
+        
+        var tabr = tableRows[id];
+        var tds = tableRows[id].getElementsByTagName("td");
+        var tdit = tableRows[id].getElementsByTagName("td").item(0);
+        var id = tableRows[id].getElementsByTagName("td").item(0).innerHTML;
         askAndFill(id);
         
       }
@@ -201,6 +208,7 @@ var tableRows = document.getElementsByClassName("tableRow");
 
  
     function fillForm({id,invoiceNumber,purchaseDate,createDate,description}){
+      document.getElementById("id").value = id;
       document.getElementById("invoiceNumberId").value = invoiceNumber;
       document.getElementById("purchaseDateId").value = purchaseDate;
       document.getElementById("descriptionId").value = description;

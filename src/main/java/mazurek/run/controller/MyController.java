@@ -38,12 +38,12 @@ public class MyController {
                       String invoiceNumber ,
                       @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime purchaseDate,
                       String description,
-
+                      @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
                       @ModelAttribute("invoice") InvoiceWriteModel iwm
 
     ){
-
-        invoiceService.createInvoice( new InvoiceWriteModel(invoiceNumber,purchaseDate,description) );
+        //LocalDateTime dateTime = LocalDateTime.parse(purchaseDate);
+        invoiceService.createInvoice( new InvoiceWriteModel(invoiceNumber, purchaseDate ,description) );
         model.addAttribute("invoices",  invoiceService.readAll());
         return "modaltest";
     }
