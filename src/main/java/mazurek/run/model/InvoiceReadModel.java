@@ -3,13 +3,22 @@ package mazurek.run.model;
 import java.time.LocalDateTime;
 
 public class InvoiceReadModel {
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    private Integer id;
     private String description;
     private String  invoiceNumber;
     private LocalDateTime purchaseDate;
     private LocalDateTime createDate;
 
     public InvoiceReadModel(Invoice invoice) {
-
+        this.id = invoice.getId();
         this.invoiceNumber = invoice.getInvoiceNumber();
         this.purchaseDate = invoice.getPurchaseDate();
         this.createDate = invoice.getCreateDate();

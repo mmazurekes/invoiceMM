@@ -22,7 +22,7 @@ public class InvoiceController {
     }
 
 
-    @GetMapping(value="/invoice")
+    @GetMapping(value="/invoices")
     ResponseEntity<List<Invoice>> readAllTasksKielbasa(){
         return ResponseEntity.ok( repository.findAll());
     }
@@ -31,5 +31,13 @@ public class InvoiceController {
         repository.save(toCreate);
         return ResponseEntity.ok( toCreate );
     }
+
+    @GetMapping(value="/invoice/{id}")
+    ResponseEntity readOneTaskKielbasa(@PathVariable int id){
+        return ResponseEntity.ok(
+                repository.findById( Integer.valueOf(id)).stream().findFirst()
+        );
+    }
+
 
 }
