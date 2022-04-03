@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style type="text/css">
+        div.example {border: #603 dotted; padding: 0.6em; margin: 1em 2em}
+        
+        /* Przykład zakładek */
+        div.tabs {
+          min-height: 7em;		/* Brak wysokości: można zwiększyć jeśli :target nie działa */
+          position: relative;		/* Ustawienie bloku zawierającego */
+          line-height: 1;		/* Łatwiej z tym liczyć */
+          z-index: 0}			/* Po to, aby umieścić rzeczy za */
+        div.tabs > div {
+          display: inline}		/* Chcemy ustawić wszystkie przyciski w jednej linii */
+        div.tabs > div > a {
+          color: black;			/* Bardziej przypomina przycisk niż link */
+          background: #CCC;		/* Aktywne zakładki są podświetlone na szaro */
+          padding: 0.2em;		/* Trochę przestrzeni do oddychania */
+          border: 0.1em outset #BBB;	/* Jeszcze bardziej przypomina przycisk */
+          border-bottom: 0.1em solid #CCC} /* Wizualne połączenie zakładek z ich ciałem */
+        div.tabs > div:not(:target) > a {
+          border-bottom: none;		/* Usuwamy dolne obramowanie */
+          background: #999}		/* Nieaktywne zakładki są ciemnoszare */
+        div.tabs > div:target > a,	/* Dodaj target do zakładki lub... */
+        :target #default2 > a {		/* ... do domyślnego elementu */
+          border-bottom: 0.1em solid #CCC; /* Wizualne połączenie zakładek z ich ciałem */
+          background: #CCC}		/* Aktywne zakładki są podświetlone na szaro */
+        div.tabs > div > div {
+          background: #CCC;		/* Szare podświetlenie */
+          z-index: -2;			/* Pod spód, ze względu na obramowanie */
+          left: 0; top: 1.3em;		/* Na górze potrzebujemy pewnych obliczeń */
+          bottom: 0; right: 0;		/* Pozostałe kierunki zerujemy blokiem */
+          overflow: auto;		/* Pasek przewijania, jeśli jest potrzebny */
+          padding: 0.3em;		/* Wygląda lepiej */
+          border: 0.1em outset #BBB}	/* Wygląda jak 3D */
+        div.tabs > div:not(:target) > div { /* Dla standardu CSS1 i CSS2 */
+          position: absolute }		/* Wszystkie te DIV-y się pokrywają */
+        div.tabs > div:target > div, :target #default2 > div {
+          position: absolute;		/* Wszystkie te DIV-y się pokrywają */
+          z-index: -1}			/* Wysuń je nad */
+        
+        div.tabs :target {
+          outline: none}
+        </style>
+
+
+</head>
+<body>
+    
+    <div class="example">
+        <div class="tabs">
+         <div id="tab1"> <a href="#tab1">Zakładka&nbsp;1</a>
+          <div>Niektórzy mogą się spierać, że...</div>
+         </div>
+    
+         <div id="tab2"> <a href="#tab2">Zakładka&nbsp;2</a>
+          <div>... 30 wierszy CSS-ów to raczej sporo i że...</div>
+         </div>
+    
+         <div id="tab3"> <a href="#tab3">Zakładka&nbsp;3</a>
+          <div>... powinny wystarczyć dwie, ale...</div>
+         </div>
+    
+         <div id="default2"> <a href="#default2">Domyślna</a>
+          <div>... to działa!</div>
+         </div>
+        </div>
+       </div>
+
+</body>
+</html>

@@ -6,12 +6,16 @@ import mazurek.run.model.Invoice;
 import mazurek.run.model.InvoiceReadModel;
 import mazurek.run.model.InvoiceWriteModel;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.validation.Valid;
 import java.beans.PropertyEditorSupport;
@@ -41,11 +45,14 @@ public class MyController {
     }
 
     @GetMapping(value = "/123")
-    String showInvoices(Model model, @ModelAttribute("invoice") InvoiceWriteModel iwm){
+    String showInvoices(Model model){
         List<InvoiceReadModel> irms = invoiceService.readAll();
         model.addAttribute("invoices", irms);
-        return "modaltest";
+
+        return "tabsInvoice";
     }
+
+
 
     @PostMapping(value = "/xyz")
     String showInvoicesXYZ(Model model,
@@ -78,6 +85,9 @@ public class MyController {
                 new MyCustomTypeEditor()
         );
     }
+
+
+
 
 //    @InitBinder
 //    private void dateBinder(WebDataBinder binder) {

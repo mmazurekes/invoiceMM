@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      
+    }
+
+    /* The Modal (background) */
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      padding-top: 100px;
+      /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(20, 0, 0, 0.4);
+      /* Black w/ opacity */
+
+    }
+
+
+    /* Modal Content */
+    .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+
+    /*The Close Button */
+    .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* tabelka*/
+    
+    #customers {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    
+    #customers td,
+    #customers th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    #customers tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    #customers tr:hover {
+      background-color: #ddd;
+    }
+
+    #customers th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #04AA6D;
+      color: rgb(53, 36, 36);
+    }
+
+
+    
+    input[type=text],
+    input[type=datetime-local] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    input[type=submit] {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+      background-color: #45a049;
+    }
+
+
+
+    /* Style do zakladek*/
+
+
+    div.example {
+      
+      padding: 0.6em;
+      margin: 1em 2em;
+    }
+
+    /* Przykład zakładek */
+    div.tabs {
+      min-height: 70em;
+      /* Brak wysokości: można zwiększyć jeśli :target nie działa */
+      position: relative;
+      /* Ustawienie bloku zawierającego */
+      line-height: 1;
+      /* Łatwiej z tym liczyć */
+      z-index: 0;
+
+      
+    }
+
+    /* Po to, aby umieścić rzeczy za */
+    div.tabs>div {
+      display: inline
+    }
+
+    /* Chcemy ustawić wszystkie przyciski w jednej linii */
+    div.tabs>div>a {
+      color: black;
+      /* Bardziej przypomina przycisk niż link */
+      background: #CCC;
+      /* Aktywne zakładki są podświetlone na szaro */
+      padding: 0.2em;
+      /* Trochę przestrzeni do oddychania */
+      border: 0.1em outset #BBB;
+      /* Jeszcze bardziej przypomina przycisk */
+      border-bottom: 0.1em solid #CCC;
+      /* usuniecie podkreslenia href */
+      text-decoration: none;
+
+     
+    }
+
+    /* Wizualne połączenie zakładek z ich ciałem */
+    div.tabs>div:not(:target)>a {
+      border-bottom: none;
+      /* Usuwamy dolne obramowanie */
+      background: #999;
+
+      
+    }
+
+    /* Nieaktywne zakładki są ciemnoszare */
+    div.tabs>div:target>a,
+    /* Dodaj target do zakładki lub... */
+    :target #default2>a {
+      /* ... do domyślnego elementu */
+      border-bottom: 0.1em solid #CCC;
+      /* Wizualne połączenie zakładek z ich ciałem */
+      background: #CCC
+    }
+
+    /* Aktywne zakładki są podświetlone na szaro */
+    div.tabs>div>div {
+      background: #CCC;
+      /* Szare podświetlenie */
+      z-index: -2;
+      /* Pod spód, ze względu na obramowanie */
+      left: 0;
+      top: 1.3em;
+      /* Na górze potrzebujemy pewnych obliczeń */
+      bottom: 0;
+      right: 0;
+      /* Pozostałe kierunki zerujemy blokiem */
+      overflow: auto;
+      /* Pasek przewijania, jeśli jest potrzebny */
+      padding: 0.3em;
+      /* Wygląda lepiej */
+      border: 0.1em outset #BBB;
+      
+      
+    }
+
+    /* Wygląda jak 3D */
+    div.tabs>div:not(:target)>div {
+      /* Dla standardu CSS1 i CSS2 */
+      position: absolute
+    }
+
+    /* Wszystkie te DIV-y się pokrywają */
+    div.tabs>div:target>div,
+    :target #default2>div {
+      position: absolute;
+      /* Wszystkie te DIV-y się pokrywają */
+      z-index: -1
+    }
+
+    /* Wysuń je nad */
+
+    div.tabs :target {
+      outline: none
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <!--/*@thymesVar id="invoices" type="java.utils.List<mazurek.run.model.InvoiceReadModel>"*/-->
+
+
+
+
+    <div class="example">
+      <div class="tabs">
+        <div id="tab1"> <a href="#tab1">Zakładka&nbsp;1</a>
+          <div>Niektórzy mogą się spierać, że...
+            <table id="customers">
+              <!--
+            this.invoiceNumber = invoice.getInvoiceNumber();
+            this.purchaseDate = invoice.getPurchaseDate();
+            this.createDate = invoice.getCreateDate();
+            this.description = invoice.getDescription();
+            !-->
+              <tr>
+                <th>Id</th>
+                <th>invoiceNumber</th>
+                <th>purchaseDate</th>
+                <th>createDate</th>
+                <th>description</th>
+              </tr>
+
+              <tr class="tableRow" th:each="invoice : ${invoices}">
+                <td th:text="${invoice.id}">...</td>
+                <td th:text="${invoice.invoiceNumber}">...</td>
+                <td th:text="${#temporals.format( invoice.purchaseDate, 'dd-MM-yyyy' )}">...</td>
+                <td th:text="${invoice.createDate}">...</td>
+                <td th:text="${invoice.description}">...</td>
+              </tr>
+
+            </table>
+          </div>
+        </div>
+
+        <div id="tab2"> <a href="#tab2">Zakładka&nbsp;2</a>
+          <div>... 30 wierszy CSS-ów to raczej sporo i że...</div>
+        </div>
+
+        <div id="tab3"> <a href="#tab3">Zakładka&nbsp;3</a>
+          <div>... powinny wystarczyć dwie, ale...</div>
+        </div>
+
+        <div id="default2"> <a href="#default2">Domyślna</a>
+          <div>... to działa!</div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="wrapper">
+      <div class="'content">
+      <ul class="menu">
+        <li class="item">
+          <i class="uil uil-eye"></i>
+          <span>Preview</span>
+        </li>
+        <li class="item">
+          <i class="uil uil-share"></i>
+          <span>Share</span>
+        </li>
+        <li class="item">
+          <i class="uil uil-link"></i>
+          <span>Gent link</span>
+        </li>
+        <li class="item">
+          <i class="uil uil-eye"></i>
+          <span>Preview</span>
+        </li>
+        <li class="item">
+          <i class="uil uil-edit"></i>
+          <span>Rename</span>
+        </li>
+        <li class="item">
+          <i class="uil uil-trash-alt"></i>
+          <span>Delete</span>
+        </li>
+      </ul>
+    </div>
+      <div class="settings">
+        <li class="item">
+          <i class="uil uil-setting"></i>
+          <span>Settings</span>
+        </li>
+      </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Trigger/Open The Modal -->
+    <button id="myBtn">Open Modal</button>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Some text in the Modalaaa..</p>
+
+        <!--/*@thymesVar id="invoices" type="mazurek.run.model.InvoiceWriteModel"*/-->
+        <form action="#" method="post" th:action="@{/my}">
+          <label>Id</label>
+          <input type="text" id="id" name="id" readonly>
+
+          <label>Invoice Number</label>
+          <input type="text" id="invoiceNumberId" name="invoiceNumber" placeholder="Invoice number">
+          <label>Data faktury</label>
+          <input type="datetime-local" id="purchaseDateId" name="purchaseDate" placeholder="Data wystawienia">
+          <label>Description</label>
+          <input type="text" id="descriptionId" name="description" placeholder="Opis">
+          <input type="submit" value="Submit">
+        </form>
+
+
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    var btn = document.getElementById("myBtn");
+    btn.onclick = function () {
+      modal.style.display = "block";
+    }
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    span.onclick = function () {
+      modal.style.display = "none";
+    }
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    var tableRows = document.getElementsByClassName("tableRow");
+    for (var i = 0; i < tableRows.length; i++) {
+      tableRows[i].onclick = function (event) {
+        modal.style.display = "block";
+
+
+        var id = event.currentTarget.cells[0].innerText;
+
+        // var tabr = tableRows[id];
+        // var tds = tableRows[id].getElementsByTagName("td");
+        // var tdit = tableRows[id].getElementsByTagName("td").item(0);
+        // var id = tableRows[id].getElementsByTagName("td").item(0).innerHTML;
+        askAndFill(id);
+
+      }
+    }
+
+
+    async function askAndFill(id) {
+      const url = '/invoice/' + id;
+      const response = await fetch(url);
+      if (response.ok) {
+        const invoiceJson = await response.json();
+        console.log(invoiceJson);
+        fillForm(invoiceJson);
+      }
+
+
+      function fillForm({ id, invoiceNumber, purchaseDate, createDate, description }) {
+        document.getElementById("id").value = id;
+        document.getElementById("invoiceNumberId").value = invoiceNumber;
+        document.getElementById("purchaseDateId").value = purchaseDate;
+        document.getElementById("descriptionId").value = description;
+      }
+
+    }
+
+  </script>
+
+</body>
+
+</html>
